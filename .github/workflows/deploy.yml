@@ -3,6 +3,7 @@ name: Deploy to WordPress.org
 on:
   push:
     tags: ['*.*.*']
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -10,6 +11,8 @@ permissions:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      HAS_SVN: ${{ secrets.SVN_USERNAME != '' && secrets.SVN_PASSWORD != '' }}
     steps:
       - uses: actions/checkout@v4
       - name: Version check
@@ -27,14 +30,17 @@ jobs:
           include-low-severity-errors: true
           include-low-severity-warnings: true
           strict: true
+      - name: GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release view "${GITHUB_REF_NAME}" >/dev/null 2>&1 \
+            || gh release create "${GITHUB_REF_NAME}" build/hikashop-for-elementor.zip --title "${GITHUB_REF_NAME}" --notes "See the changelog in readme.txt."
       - name: Deploy to the WordPress.org SVN
+        if: env.HAS_SVN == 'true'
         uses: 10up/action-wordpress-plugin-deploy@stable
         env:
           SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
           SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
           SLUG: hikashop-for-elementor
           ASSETS_DIR: .wordpress-org
-      - name: GitHub release
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: gh release create "${GITHUB_REF_NAME}" build/hikashop-for-elementor.zip --title "${GITHUB_REF_NAME}" --notes "See the changelog in readme.txt."

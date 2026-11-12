@@ -106,7 +106,9 @@ CI lints the PHP on 7.4, 8.1 and 8.4 and runs [Plugin Check](https://wordpress.o
 1. Bump `Version` in `hikashop-for-elementor.php`, `HIKASHOP_ELEMENTOR_VERSION`, `Stable tag` in `readme.txt`, and add the changelog entry to `readme.txt`.
 2. Tag the commit with the version (`1.0.1`) and push the tag. The deploy workflow checks the versions match, runs Plugin Check, commits the release and the `.wordpress-org/` assets to the WordPress.org SVN, and creates the GitHub release with the zip.
 
-The SVN credentials are the `SVN_USERNAME` and `SVN_PASSWORD` repository secrets.
+The SVN credentials are the `SVN_USERNAME` and `SVN_PASSWORD` repository secrets; without them the workflow only makes the GitHub release. To send a version already released on GitHub to WordPress.org later, run the deploy workflow by hand on its tag.
+
+The [HikaShop marketplace](https://www.hikashop.com/marketplace/display/product/370-hikashop-for-elementor) downloads the zip of the latest GitHub release, so it follows each release without anything to do.
 
 ## Support
 
