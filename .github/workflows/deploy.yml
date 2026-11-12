@@ -1,0 +1,40 @@
+name: Deploy to WordPress.org
+
+on:
+  push:
+    tags: ['*.*.*']
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Version check
+        run: |
+          tag="${GITHUB_REF_NAME}"
+          grep -q "Version:           ${tag}$" hikashop-for-elementor.php || { echo "plugin header is not ${tag}"; exit 1; }
+          grep -q "^Stable tag: ${tag}$" readme.txt || { echo "readme Stable tag is not ${tag}"; exit 1; }
+      - name: Build
+        run: bin/build.sh
+      - name: Plugin Check
+        uses: wordpress/plugin-check-action@v1
+        with:
+          build-dir: build/hikashop-for-elementor
+          include-experimental: true
+          include-low-severity-errors: true
+          include-low-severity-warnings: true
+          strict: true
+      - name: Deploy to the WordPress.org SVN
+        uses: 10up/action-wordpress-plugin-deploy@stable
+        env:
+          SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+          SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
+          SLUG: hikashop-for-elementor
+          ASSETS_DIR: .wordpress-org
+      - name: GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "${GITHUB_REF_NAME}" build/hikashop-for-elementor.zip --title "${GITHUB_REF_NAME}" --notes "See the changelog in readme.txt."
