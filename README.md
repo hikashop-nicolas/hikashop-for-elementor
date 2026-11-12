@@ -76,7 +76,7 @@ The plugin reimplements no shop logic, so prices, taxes, discounts, stock, acces
 - **Listings** go through `hikashop_getLayout()` with module settings, the way HikaShop's own modules render.
 - **Product parts** render HikaShop's product blocks (the ones of the WordPress site editor) for the product of the page.
 - **Cart, wishlist, currency and filters** render HikaShop's WordPress widgets; their settings are stored by HikaShop under an id derived from the Elementor element.
-- **The product page template** hooks the `hikashop_wp_page_output` filter of HikaShop.
+- **The product page template** hooks the `hikashop_wp_page_output` filter of HikaShop. The page's title, meta description, canonical URL, Yoast SEO and Rank Math data and the product's structured data come from HikaShop, as on its own product page.
 - **The editor**: Elementor renders widgets inside admin requests; `hikashop_siteRendering()` makes HikaShop render as on the site there (frontend layouts, links and image paths).
 - **Output** is escaped with `wp_kses()` and an allowlist for HikaShop's forms; HikaShop's inline scripts and styles go through `wp_add_inline_script()` and `wp_add_inline_style()`.
 
