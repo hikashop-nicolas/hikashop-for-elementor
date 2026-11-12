@@ -17,7 +17,7 @@ HikaShop for Elementor adds a HikaShop group to the Elementor widget panel. It w
 = Listings =
 
 * **HikaShop Products**: the products of a category, products chosen by hand (with a search of your catalog), products on sale, the products the visitor viewed recently, or the products related to the product being viewed. Choose the order, the number of products, the columns, the product layout, and whether to show the price, the add to cart button, the quantity field, the wishlist button, the rating and the badges.
-* **HikaShop Categories**: the subcategories of a category, with the number of products in each.
+* **HikaShop Categories**: the subcategories of a category, with the number of products in each, empty categories hidden if you want.
 
 = Product page =
 
@@ -39,7 +39,7 @@ Prices, taxes, discounts, stock, access rights and the cart all follow your Hika
 
 = Requirements =
 
-This plugin needs HikaShop 6.8.3 or newer on WordPress, and Elementor 3.24 or newer. HikaShop is not hosted on WordPress.org: its free Starter edition and the Essential and Business editions are available on [hikashop.com](https://www.hikashop.com/download.html).
+This plugin needs HikaShop 6.8.2 or newer on WordPress (a package downloaded since 12 November 2026: reinstall it over an older 6.8.2), and Elementor 3.24 or newer. HikaShop is not hosted on WordPress.org: its free Starter edition and the Essential and Business editions are available on [hikashop.com](https://www.hikashop.com/download).
 
 == Installation ==
 
@@ -68,9 +68,12 @@ Yes, with HikaShop's layout overrides: copy the HikaShop layout file into the hi
 
 == Screenshots ==
 
-1. Product listing and its settings in the Elementor editor.
-2. A product page template designed with the product widgets.
-3. The product page on the site.
+1. A product listing and its settings in the Elementor editor.
+2. Products chosen by hand, with a search of the HikaShop catalog.
+3. A product page template designed with the product widgets of the HikaShop group.
+4. A HikaShop product page shown with that template.
+5. A shop page built with the category and product listing widgets.
+6. The product page template setting.
 
 == Changelog ==
 

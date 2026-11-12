@@ -77,6 +77,16 @@ class Categories extends Products {
 		);
 
 		$this->add_control(
+			'hide_empty',
+			array(
+				'label'        => esc_html__( 'Hide empty categories', 'hikashop-for-elementor' ),
+				'type'         => Controls_Manager::SWITCHER,
+				'return_value' => '1',
+				'default'      => '1',
+			)
+		);
+
+		$this->add_control(
 			'order',
 			array(
 				'label'   => esc_html__( 'Order by', 'hikashop-for-elementor' ),

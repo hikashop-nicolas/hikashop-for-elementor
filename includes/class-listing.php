@@ -48,16 +48,29 @@ final class Listing {
 	/**
 	 * Sets the "inherit / yes / no" switches: inherit keeps the HikaShop configuration.
 	 *
-	 * @param \HikaParameter $params   Listing parameters.
-	 * @param array          $settings Widget settings.
-	 * @param array          $map      Setting name => listing parameter.
+	 * @param array $values   Listing parameters.
+	 * @param array $settings Widget settings.
+	 * @param array $map      Setting name => listing parameter.
 	 */
-	private static function apply_switches( $params, $settings, $map ) {
+	private static function apply_switches( &$values, $settings, $map ) {
 		foreach ( $map as $setting => $param ) {
 			if ( isset( $settings[ $setting ] ) && in_array( $settings[ $setting ], array( '0', '1' ), true ) ) {
-				$params->set( $param, (int) $settings[ $setting ] );
+				$values[ $param ] = (int) $settings[ $setting ];
 			}
 		}
+	}
+
+	/**
+	 * Sets the listing parameters, also as module settings: without them HikaShop takes the listing for the page's own and follows the page.
+	 *
+	 * @param \HikaParameter $params Listing parameters.
+	 * @param array          $values Values to set.
+	 */
+	private static function set_params( $params, $values ) {
+		foreach ( $values as $key => $value ) {
+			$params->set( $key, $value );
+		}
+		$params->set( 'hikashopmodule', (object) $values );
 	}
 
 	/**
@@ -97,7 +110,7 @@ final class Listing {
 		$order = $settings['order'] ?? 'ordering';
 		if ( 'random' === $order ) {
 			$values['random'] = 1;
-		} elseif ( in_array( $order, array( 'ordering', 'b.product_name', 'b.product_created', 'b.product_sales', 'b.product_hit', 'b.product_sort_price', 'b.product_average_score', 'b.product_modified' ), true ) ) {
+		} elseif ( in_array( $order, array( 'ordering', 'product_name', 'product_created', 'product_sales', 'product_hit', 'product_sort_price', 'product_average_score', 'product_modified' ), true ) ) {
 			$values['product_order'] = $order;
 		}
 
@@ -125,14 +138,11 @@ final class Listing {
 				break;
 		}
 
-		foreach ( $values as $key => $value ) {
-			$params->set( $key, $value );
-		}
 		if ( ! empty( $settings['item_layout'] ) && 'inherit' !== $settings['item_layout'] ) {
-			$params->set( 'div_item_layout_type', sanitize_key( $settings['item_layout'] ) );
+			$values['div_item_layout_type'] = sanitize_key( $settings['item_layout'] );
 		}
 		self::apply_switches(
-			$params,
+			$values,
 			$settings,
 			array(
 				'show_price'    => 'show_price',
@@ -144,6 +154,7 @@ final class Listing {
 				'product_links' => 'link_to_product_page',
 			)
 		);
+		self::set_params( $params, $values );
 
 		$related = 'related' === $source;
 		$input   = \hikaInput::get();
@@ -196,18 +207,17 @@ final class Listing {
 			'columns'             => max( 1, min( 12, (int) ( $settings['columns'] ?? 4 ) ) ),
 			'order_dir'           => ( 'DESC' === ( $settings['order_dir'] ?? 'ASC' ) ) ? 'DESC' : 'ASC',
 			'number_of_products'  => empty( $settings['count'] ) ? 0 : 1,
+			'only_if_products'    => empty( $settings['hide_empty'] ) ? 0 : 1,
 			'child_display_type'  => 'nochild',
 		);
 		$order = $settings['order'] ?? 'category_ordering';
 		if ( in_array( $order, array( 'category_ordering', 'category_name', 'category_created', 'category_modified' ), true ) ) {
 			$values['category_order'] = $order;
 		}
-		foreach ( $values as $key => $value ) {
-			$params->set( $key, $value );
-		}
 		if ( ! empty( $settings['item_layout'] ) && 'inherit' !== $settings['item_layout'] ) {
-			$params->set( 'div_item_layout_type', sanitize_key( $settings['item_layout'] ) );
+			$values['div_item_layout_type'] = sanitize_key( $settings['item_layout'] );
 		}
+		self::set_params( $params, $values );
 
 		$js = '';
 		return trim( (string) hikashop_getLayout( 'category', 'listing', $params, $js, 'site' ) );
@@ -239,12 +249,12 @@ final class Listing {
 		$kept = array();
 		foreach ( (array) $filters as $key => $filter ) {
 			// The category and product type conditions go, publication, access and stock stay
-			if ( is_string( $filter ) && ( preg_match( '#\ba\.#', $filter ) || false !== strpos( $filter, 'b.product_type' ) ) ) {
+			if ( is_string( $filter ) && ( preg_match( '#\ba\.#', $filter ) || false !== strpos( $filter, 'product_type' ) ) ) {
 				continue;
 			}
 			$kept[ $key ] = $filter;
 		}
-		$kept[]  = 'b.product_id IN (' . $list . ')';
+		$kept[]  = 'product_id IN (' . $list . ')';
 		$filters = $kept;
 
 		$select = 'SELECT DISTINCT b.*';

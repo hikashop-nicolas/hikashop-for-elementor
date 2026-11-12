@@ -75,6 +75,7 @@ final class Render {
 		if ( function_exists( 'hikashop_wp_enqueue_frontend_assets' ) ) {
 			hikashop_wp_enqueue_frontend_assets();
 		}
+		wp_enqueue_style( 'hikashop-elementor', HIKASHOP_ELEMENTOR_URL . 'assets/css/frontend.css', array(), HIKASHOP_ELEMENTOR_VERSION );
 	}
 
 	/**

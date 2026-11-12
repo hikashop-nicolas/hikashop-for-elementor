@@ -1,0 +1,5 @@
+/* Elementor sets every image to height:auto; HikaShop's gallery thumbnails need their own size back */
+.elementor img.hikashop_child_image {
+	height: 30px;
+	width: auto;
+}

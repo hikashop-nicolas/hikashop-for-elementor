@@ -15,7 +15,7 @@ defined( 'ABSPATH' ) || exit;
 final class Plugin {
 
 	const MIN_ELEMENTOR = '3.24.0';
-	const MIN_HIKASHOP  = '6.8.3';
+	const MIN_HIKASHOP  = '6.8.2';
 
 	/**
 	 * Hooks the plugin in once every plugin is loaded.
@@ -30,8 +30,9 @@ final class Plugin {
 	 * @return bool
 	 */
 	public static function hikashop_ready() {
+		// The 6.8.2 packages built since 12 November 2026 carry hikashop_siteRendering(), which the widgets need
 		return defined( 'HIKASHOP_COMPONENT' ) && defined( 'HIKASHOP_WP_VERSION' ) && function_exists( 'hikashop_get' )
-			&& version_compare( HIKASHOP_WP_VERSION, self::MIN_HIKASHOP, '>=' );
+			&& version_compare( HIKASHOP_WP_VERSION, self::MIN_HIKASHOP, '>=' ) && function_exists( 'hikashop_siteRendering' );
 	}
 
 	/**
@@ -81,9 +82,9 @@ final class Plugin {
 		if ( ! self::hikashop_ready() ) {
 			$message = sprintf(
 				/* translators: 1: minimum HikaShop version, 2: link to the HikaShop download page */
-				__( 'HikaShop for Elementor needs HikaShop %1$s or newer, installed and active. HikaShop Starter is free: %2$s', 'hikashop-for-elementor' ),
+				__( 'HikaShop for Elementor needs HikaShop %1$s or newer (a package downloaded since 12 November 2026), installed and active. HikaShop Starter is free: %2$s', 'hikashop-for-elementor' ),
 				self::MIN_HIKASHOP,
-				'<a href="https://www.hikashop.com/download.html" target="_blank" rel="noopener noreferrer">' . esc_html__( 'download HikaShop', 'hikashop-for-elementor' ) . '</a>'
+				'<a href="https://www.hikashop.com/download" target="_blank" rel="noopener noreferrer">' . esc_html__( 'download HikaShop', 'hikashop-for-elementor' ) . '</a>'
 			);
 		} else {
 			$message = sprintf(
