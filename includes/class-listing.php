@@ -158,9 +158,11 @@ final class Listing {
 
 		$related = 'related' === $source;
 		$input   = \hikaInput::get();
-		$saved   = $related ? array( $input->getString( 'ctrl' ), $input->getString( 'task' ) ) : null;
+		$saved   = $related ? array( $input->getString( 'ctrl' ), $input->getString( 'task' ), $input->getString( 'option' ) ) : null;
 		if ( $related ) {
 			// related products are read from the product page being shown
+			// HikaShop reads them from the product page; builder previews are other requests
+			$input->set( 'option', HIKASHOP_COMPONENT );
 			$input->set( 'ctrl', 'product' );
 			$input->set( 'task', 'show' );
 			if ( ! $input->getInt( 'cid', 0 ) && Render::is_editor() && class_exists( Widgets\Product_Part::class ) ) {
@@ -176,6 +178,7 @@ final class Listing {
 			if ( $related ) {
 				$input->set( 'ctrl', $saved[0] );
 				$input->set( 'task', $saved[1] );
+				$input->set( 'option', $saved[2] );
 			}
 		}
 		return trim( (string) $html );
