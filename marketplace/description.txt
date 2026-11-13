@@ -42,6 +42,10 @@
 	</ul>
 </div>
 <div id="changelog"><span class="blue_title">Changelog</span>
+	<p class="version">1.0.1 on the 13th of November 2026</p>
+	<ul>
+		<li>A product listing showing the related products of the product being viewed lists those products in the editor preview too; it showed other products there.</li>
+	</ul>
 	<p class="version">1.0.0 on the 12th of November 2026</p>
 	<ul>
 		<li>First release: product and category listings, the product page widgets, the product page template, the cart, wishlist, currency switcher and filter widgets.</li>
