@@ -33,7 +33,7 @@
 <div id="product_use"><span class="blue_title">Use</span>
 	<ul>
 		<li>Free plugin, for every HikaShop edition, Starter included (the Filters widget needs HikaShop Business, the edition with the filters)</li>
-		<li>Requires HikaShop 6.8.2 minimum, a package downloaded since 12 November 2026</li>
+		<li>Requires HikaShop 6.8.2 minimum, a package downloaded since 16 November 2026</li>
 		<li>Requires Elementor 3.24 minimum, the free plugin is enough</li>
 		<li>Compatible with WordPress 6.6 minimum and PHP 7.4 minimum</li>
 		<li>WordPress only (Elementor does not exist on Joomla)</li>

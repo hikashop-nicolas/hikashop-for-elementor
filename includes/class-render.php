@@ -15,13 +15,6 @@ defined( 'ABSPATH' ) || exit;
 final class Render {
 
 	/**
-	 * Hashes of the inline scripts and styles already queued.
-	 *
-	 * @var array
-	 */
-	private static $queued = array();
-
-	/**
 	 * Whether the request renders inside the Elementor editor or its preview.
 	 *
 	 * @return bool
@@ -79,7 +72,7 @@ final class Render {
 	}
 
 	/**
-	 * Prints HikaShop HTML: scripts and styles go through the WordPress queues, the rest through wp_kses().
+	 * Prints HikaShop HTML through wp_kses(); HikaShop queues the layout's scripts and styles.
 	 *
 	 * @param string $html HTML from a HikaShop layout.
 	 */
@@ -94,68 +87,16 @@ final class Render {
 			self::enqueue_shop_assets();
 		}
 
-		$html = preg_replace_callback(
-			'#<script\b([^>]*)>(.*?)</script>#is',
-			function ( $m ) use ( $ajax ) {
-				if ( ! $ajax ) {
-					self::queue_script( $m[1], $m[2] );
-				}
-				return '';
-			},
-			$html
-		);
-		$html = preg_replace_callback(
-			'#<style\b[^>]*>(.*?)</style>#is',
-			function ( $m ) {
-				self::queue_style( $m[1] );
-				return '';
-			},
-			$html
-		);
+		if ( function_exists( 'hikashop_wp_queue_layout_assets' ) ) {
+			$html = hikashop_wp_queue_layout_assets( $html, ! $ajax );
+		} else {
+			$html = preg_replace( '#<(script|style)\b[^>]*>.*?</\1>#is', '', $html );
+		}
 
 		echo wp_kses( $html, self::allowed_html() );
 	}
 
-	/**
-	 * Hands a script of the layout to WordPress, after HikaShop's own script.
-	 *
-	 * @param string $attributes Attributes of the script tag.
-	 * @param string $code       Inline code.
-	 */
-	private static function queue_script( $attributes, $code ) {
-		if ( preg_match( '#\btype\s*=\s*["\']?(?!text/javascript|module)[a-z]+/#i', $attributes ) ) {
-			return;
-		}
-		if ( preg_match( '#\bsrc\s*=\s*["\']([^"\']+)#i', $attributes, $src ) ) {
-			$url = html_entity_decode( $src[1] );
-			wp_enqueue_script( 'hikashop-elementor-' . md5( $url ), $url, array( 'hikashop-core' ), HIKASHOP_ELEMENTOR_VERSION, true );
-			return;
-		}
-		$code = trim( $code );
-		$hash = md5( $code );
-		if ( '' === $code || isset( self::$queued[ $hash ] ) ) {
-			return;
-		}
-		self::$queued[ $hash ] = true;
-		wp_add_inline_script( 'hikashop-core', $code );
-	}
 
-	/**
-	 * Hands a style block of the layout to WordPress.
-	 *
-	 * @param string $css CSS code.
-	 */
-	private static function queue_style( $css ) {
-		$css  = trim( $css );
-		$hash = md5( $css );
-		if ( '' === $css || isset( self::$queued[ $hash ] ) ) {
-			return;
-		}
-		self::$queued[ $hash ] = true;
-		if ( wp_style_is( 'hikashop-frontend', 'registered' ) ) {
-			wp_add_inline_style( 'hikashop-frontend', wp_strip_all_tags( $css ) );
-		}
-	}
 
 	/**
 	 * Tags and attributes HikaShop's layouts use: the post allowlist plus forms and their event handlers.

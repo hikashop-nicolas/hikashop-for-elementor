@@ -39,7 +39,7 @@ Prices, taxes, discounts, stock, access rights and the cart all follow your Hika
 
 = Requirements =
 
-This plugin needs HikaShop 6.8.2 or newer on WordPress (a package downloaded since 12 November 2026: reinstall it over an older 6.8.2), and Elementor 3.24 or newer. HikaShop is not hosted on WordPress.org: its free Starter edition and the Essential and Business editions are available on [hikashop.com](https://www.hikashop.com/download).
+This plugin needs HikaShop 6.8.2 or newer on WordPress (a package downloaded since 16 November 2026: reinstall it over an older 6.8.2), and Elementor 3.24 or newer. HikaShop is not hosted on WordPress.org: its free Starter edition and the Essential and Business editions are available on [hikashop.com](https://www.hikashop.com/download).
 
 == Installation ==
 

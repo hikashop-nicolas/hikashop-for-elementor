@@ -56,7 +56,7 @@ The variant selectors, the add to cart button, the image gallery and a link to a
 | WordPress | 6.6 or newer |
 | PHP | 7.4 or newer |
 | Elementor | 3.24 or newer, the free plugin is enough |
-| HikaShop | 6.8.2 or newer on WordPress, a package downloaded since 12 November 2026 (Starter, the free edition, works: [download it](https://www.hikashop.com/download)) |
+| HikaShop | 6.8.2 or newer on WordPress, a package downloaded since 16 November 2026 (Starter, the free edition, works: [download it](https://www.hikashop.com/download)) |
 
 If a requirement is missing, the plugin stays inactive and says which one in the admin.
 
