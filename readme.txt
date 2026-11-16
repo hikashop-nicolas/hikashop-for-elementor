@@ -4,7 +4,7 @@ Tags: hikashop, elementor, ecommerce, shop, product
 Requires at least: 6.6
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -76,6 +76,9 @@ Yes, with HikaShop's layout overrides: copy the HikaShop layout file into the hi
 6. The product page template setting.
 
 == Changelog ==
+
+= 1.0.2 =
+* The scripts and styles of the HikaShop layouts shown in the widgets are loaded by HikaShop itself. This needs a HikaShop 6.8.2 package downloaded since 16 November 2026; with an older one, the widgets show without those scripts.
 
 = 1.0.1 =
 * A product listing showing the related products of the product being viewed lists those products in the editor preview too; it showed other products there.

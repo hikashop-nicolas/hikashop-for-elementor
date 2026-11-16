@@ -42,6 +42,10 @@
 	</ul>
 </div>
 <div id="changelog"><span class="blue_title">Changelog</span>
+	<p class="version">1.0.2 on the 16th of November 2026</p>
+	<ul>
+		<li>The scripts and styles of the HikaShop layouts shown in the widgets are loaded by HikaShop itself. This needs a HikaShop 6.8.2 package downloaded since 16 November 2026; with an older one, the widgets show without those scripts.</li>
+	</ul>
 	<p class="version">1.0.1 on the 13th of November 2026</p>
 	<ul>
 		<li>A product listing showing the related products of the product being viewed lists those products in the editor preview too; it showed other products there.</li>
