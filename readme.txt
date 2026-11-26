@@ -4,7 +4,7 @@ Tags: hikashop, elementor, ecommerce, shop, product
 Requires at least: 6.6
 Tested up to: 7.2
 Requires PHP: 7.4
-Stable tag: 1.0.4
+Stable tag: 1.0.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -76,6 +76,9 @@ Yes, with HikaShop's layout overrides: copy the HikaShop layout file into the hi
 6. The product page template setting.
 
 == Changelog ==
+
+= 1.0.5 =
+* Tested with WordPress 7.2; the plugin works as in 1.0.4.
 
 = 1.0.4 =
 * The notice saying HikaShop or Elementor is missing or too old shows on the Plugins page only, instead of on every admin page.

@@ -42,6 +42,10 @@
 	</ul>
 </div>
 <div id="changelog"><span class="blue_title">Changelog</span>
+	<p class="version">1.0.5 on the 26th of November 2026</p>
+	<ul>
+		<li>Tested with WordPress 7.2; the plugin works as in 1.0.4.</li>
+	</ul>
 	<p class="version">1.0.4 on the 24th of November 2026</p>
 	<ul>
 		<li>The notice saying HikaShop or Elementor is missing or too old shows on the Plugins page only, instead of on every admin page.</li>
